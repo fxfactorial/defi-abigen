@@ -20,7 +20,6 @@ var (
 	_ = big.NewInt
 	_ = strings.NewReader
 	_ = ethereum.NotFound
-	_ = abi.U256
 	_ = bind.Bind
 	_ = common.Big1
 	_ = types.BloomLookup
@@ -138,7 +137,7 @@ func bindOnesplit(address common.Address, caller bind.ContractCaller, transactor
 // sets the output to result. The result type might be a single field for simple
 // returns, a slice of interfaces for anonymous returns and a struct for named
 // returns.
-func (_Onesplit *OnesplitRaw) Call(opts *bind.CallOpts, result interface{}, method string, params ...interface{}) error {
+func (_Onesplit *OnesplitRaw) Call(opts *bind.CallOpts, result *[]interface{}, method string, params ...interface{}) error {
 	return _Onesplit.Contract.OnesplitCaller.contract.Call(opts, result, method, params...)
 }
 
@@ -157,7 +156,7 @@ func (_Onesplit *OnesplitRaw) Transact(opts *bind.TransactOpts, method string, p
 // sets the output to result. The result type might be a single field for simple
 // returns, a slice of interfaces for anonymous returns and a struct for named
 // returns.
-func (_Onesplit *OnesplitCallerRaw) Call(opts *bind.CallOpts, result interface{}, method string, params ...interface{}) error {
+func (_Onesplit *OnesplitCallerRaw) Call(opts *bind.CallOpts, result *[]interface{}, method string, params ...interface{}) error {
 	return _Onesplit.Contract.contract.Call(opts, result, method, params...)
 }
 
@@ -174,23 +173,29 @@ func (_Onesplit *OnesplitTransactorRaw) Transact(opts *bind.TransactOpts, method
 
 // GetExpectedReturn is a free data retrieval call binding the contract method 0x085e2c5b.
 //
-// Solidity: function getExpectedReturn(address fromToken, address destToken, uint256 amount, uint256 parts, uint256 flags) constant returns(uint256 returnAmount, uint256[] distribution)
+// Solidity: function getExpectedReturn(address fromToken, address destToken, uint256 amount, uint256 parts, uint256 flags) view returns(uint256 returnAmount, uint256[] distribution)
 func (_Onesplit *OnesplitCaller) GetExpectedReturn(opts *bind.CallOpts, fromToken common.Address, destToken common.Address, amount *big.Int, parts *big.Int, flags *big.Int) (struct {
 	ReturnAmount *big.Int
 	Distribution []*big.Int
 }, error) {
-	ret := new(struct {
+	var out []interface{}
+	err := _Onesplit.contract.Call(opts, &out, "getExpectedReturn", fromToken, destToken, amount, parts, flags)
+
+	outstruct := new(struct {
 		ReturnAmount *big.Int
 		Distribution []*big.Int
 	})
-	out := ret
-	err := _Onesplit.contract.Call(opts, out, "getExpectedReturn", fromToken, destToken, amount, parts, flags)
-	return *ret, err
+
+	outstruct.ReturnAmount = out[0].(*big.Int)
+	outstruct.Distribution = out[1].([]*big.Int)
+
+	return *outstruct, err
+
 }
 
 // GetExpectedReturn is a free data retrieval call binding the contract method 0x085e2c5b.
 //
-// Solidity: function getExpectedReturn(address fromToken, address destToken, uint256 amount, uint256 parts, uint256 flags) constant returns(uint256 returnAmount, uint256[] distribution)
+// Solidity: function getExpectedReturn(address fromToken, address destToken, uint256 amount, uint256 parts, uint256 flags) view returns(uint256 returnAmount, uint256[] distribution)
 func (_Onesplit *OnesplitSession) GetExpectedReturn(fromToken common.Address, destToken common.Address, amount *big.Int, parts *big.Int, flags *big.Int) (struct {
 	ReturnAmount *big.Int
 	Distribution []*big.Int
@@ -200,7 +205,7 @@ func (_Onesplit *OnesplitSession) GetExpectedReturn(fromToken common.Address, de
 
 // GetExpectedReturn is a free data retrieval call binding the contract method 0x085e2c5b.
 //
-// Solidity: function getExpectedReturn(address fromToken, address destToken, uint256 amount, uint256 parts, uint256 flags) constant returns(uint256 returnAmount, uint256[] distribution)
+// Solidity: function getExpectedReturn(address fromToken, address destToken, uint256 amount, uint256 parts, uint256 flags) view returns(uint256 returnAmount, uint256[] distribution)
 func (_Onesplit *OnesplitCallerSession) GetExpectedReturn(fromToken common.Address, destToken common.Address, amount *big.Int, parts *big.Int, flags *big.Int) (struct {
 	ReturnAmount *big.Int
 	Distribution []*big.Int
@@ -210,25 +215,32 @@ func (_Onesplit *OnesplitCallerSession) GetExpectedReturn(fromToken common.Addre
 
 // GetExpectedReturnWithGas is a free data retrieval call binding the contract method 0x8373f265.
 //
-// Solidity: function getExpectedReturnWithGas(address fromToken, address destToken, uint256 amount, uint256 parts, uint256 flags, uint256 destTokenEthPriceTimesGasPrice) constant returns(uint256 returnAmount, uint256 estimateGasAmount, uint256[] distribution)
+// Solidity: function getExpectedReturnWithGas(address fromToken, address destToken, uint256 amount, uint256 parts, uint256 flags, uint256 destTokenEthPriceTimesGasPrice) view returns(uint256 returnAmount, uint256 estimateGasAmount, uint256[] distribution)
 func (_Onesplit *OnesplitCaller) GetExpectedReturnWithGas(opts *bind.CallOpts, fromToken common.Address, destToken common.Address, amount *big.Int, parts *big.Int, flags *big.Int, destTokenEthPriceTimesGasPrice *big.Int) (struct {
 	ReturnAmount      *big.Int
 	EstimateGasAmount *big.Int
 	Distribution      []*big.Int
 }, error) {
-	ret := new(struct {
+	var out []interface{}
+	err := _Onesplit.contract.Call(opts, &out, "getExpectedReturnWithGas", fromToken, destToken, amount, parts, flags, destTokenEthPriceTimesGasPrice)
+
+	outstruct := new(struct {
 		ReturnAmount      *big.Int
 		EstimateGasAmount *big.Int
 		Distribution      []*big.Int
 	})
-	out := ret
-	err := _Onesplit.contract.Call(opts, out, "getExpectedReturnWithGas", fromToken, destToken, amount, parts, flags, destTokenEthPriceTimesGasPrice)
-	return *ret, err
+
+	outstruct.ReturnAmount = out[0].(*big.Int)
+	outstruct.EstimateGasAmount = out[1].(*big.Int)
+	outstruct.Distribution = out[2].([]*big.Int)
+
+	return *outstruct, err
+
 }
 
 // GetExpectedReturnWithGas is a free data retrieval call binding the contract method 0x8373f265.
 //
-// Solidity: function getExpectedReturnWithGas(address fromToken, address destToken, uint256 amount, uint256 parts, uint256 flags, uint256 destTokenEthPriceTimesGasPrice) constant returns(uint256 returnAmount, uint256 estimateGasAmount, uint256[] distribution)
+// Solidity: function getExpectedReturnWithGas(address fromToken, address destToken, uint256 amount, uint256 parts, uint256 flags, uint256 destTokenEthPriceTimesGasPrice) view returns(uint256 returnAmount, uint256 estimateGasAmount, uint256[] distribution)
 func (_Onesplit *OnesplitSession) GetExpectedReturnWithGas(fromToken common.Address, destToken common.Address, amount *big.Int, parts *big.Int, flags *big.Int, destTokenEthPriceTimesGasPrice *big.Int) (struct {
 	ReturnAmount      *big.Int
 	EstimateGasAmount *big.Int
@@ -239,7 +251,7 @@ func (_Onesplit *OnesplitSession) GetExpectedReturnWithGas(fromToken common.Addr
 
 // GetExpectedReturnWithGas is a free data retrieval call binding the contract method 0x8373f265.
 //
-// Solidity: function getExpectedReturnWithGas(address fromToken, address destToken, uint256 amount, uint256 parts, uint256 flags, uint256 destTokenEthPriceTimesGasPrice) constant returns(uint256 returnAmount, uint256 estimateGasAmount, uint256[] distribution)
+// Solidity: function getExpectedReturnWithGas(address fromToken, address destToken, uint256 amount, uint256 parts, uint256 flags, uint256 destTokenEthPriceTimesGasPrice) view returns(uint256 returnAmount, uint256 estimateGasAmount, uint256[] distribution)
 func (_Onesplit *OnesplitCallerSession) GetExpectedReturnWithGas(fromToken common.Address, destToken common.Address, amount *big.Int, parts *big.Int, flags *big.Int, destTokenEthPriceTimesGasPrice *big.Int) (struct {
 	ReturnAmount      *big.Int
 	EstimateGasAmount *big.Int
@@ -250,47 +262,73 @@ func (_Onesplit *OnesplitCallerSession) GetExpectedReturnWithGas(fromToken commo
 
 // OneSplitView is a free data retrieval call binding the contract method 0xfbe4ed95.
 //
-// Solidity: function oneSplitView() constant returns(address)
+// Solidity: function oneSplitView() view returns(address)
 func (_Onesplit *OnesplitCaller) OneSplitView(opts *bind.CallOpts) (common.Address, error) {
-	var (
-		ret0 = new(common.Address)
-	)
-	out := ret0
-	err := _Onesplit.contract.Call(opts, out, "oneSplitView")
-	return *ret0, err
+	var out []interface{}
+	err := _Onesplit.contract.Call(opts, &out, "oneSplitView")
+
+	if err != nil {
+		return *new(common.Address), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+
+	return out0, err
+
 }
 
 // OneSplitView is a free data retrieval call binding the contract method 0xfbe4ed95.
 //
-// Solidity: function oneSplitView() constant returns(address)
+// Solidity: function oneSplitView() view returns(address)
 func (_Onesplit *OnesplitSession) OneSplitView() (common.Address, error) {
 	return _Onesplit.Contract.OneSplitView(&_Onesplit.CallOpts)
 }
 
 // OneSplitView is a free data retrieval call binding the contract method 0xfbe4ed95.
 //
-// Solidity: function oneSplitView() constant returns(address)
+// Solidity: function oneSplitView() view returns(address)
 func (_Onesplit *OnesplitCallerSession) OneSplitView() (common.Address, error) {
 	return _Onesplit.Contract.OneSplitView(&_Onesplit.CallOpts)
 }
 
 // Swap is a paid mutator transaction binding the contract method 0xe2a7515e.
 //
-// Solidity: function swap(address fromToken, address destToken, uint256 amount, uint256 minReturn, uint256[] distribution, uint256 flags) returns(uint256 returnAmount)
+// Solidity: function swap(address fromToken, address destToken, uint256 amount, uint256 minReturn, uint256[] distribution, uint256 flags) payable returns(uint256 returnAmount)
 func (_Onesplit *OnesplitTransactor) Swap(opts *bind.TransactOpts, fromToken common.Address, destToken common.Address, amount *big.Int, minReturn *big.Int, distribution []*big.Int, flags *big.Int) (*types.Transaction, error) {
 	return _Onesplit.contract.Transact(opts, "swap", fromToken, destToken, amount, minReturn, distribution, flags)
 }
 
 // Swap is a paid mutator transaction binding the contract method 0xe2a7515e.
 //
-// Solidity: function swap(address fromToken, address destToken, uint256 amount, uint256 minReturn, uint256[] distribution, uint256 flags) returns(uint256 returnAmount)
+// Solidity: function swap(address fromToken, address destToken, uint256 amount, uint256 minReturn, uint256[] distribution, uint256 flags) payable returns(uint256 returnAmount)
 func (_Onesplit *OnesplitSession) Swap(fromToken common.Address, destToken common.Address, amount *big.Int, minReturn *big.Int, distribution []*big.Int, flags *big.Int) (*types.Transaction, error) {
 	return _Onesplit.Contract.Swap(&_Onesplit.TransactOpts, fromToken, destToken, amount, minReturn, distribution, flags)
 }
 
 // Swap is a paid mutator transaction binding the contract method 0xe2a7515e.
 //
-// Solidity: function swap(address fromToken, address destToken, uint256 amount, uint256 minReturn, uint256[] distribution, uint256 flags) returns(uint256 returnAmount)
+// Solidity: function swap(address fromToken, address destToken, uint256 amount, uint256 minReturn, uint256[] distribution, uint256 flags) payable returns(uint256 returnAmount)
 func (_Onesplit *OnesplitTransactorSession) Swap(fromToken common.Address, destToken common.Address, amount *big.Int, minReturn *big.Int, distribution []*big.Int, flags *big.Int) (*types.Transaction, error) {
 	return _Onesplit.Contract.Swap(&_Onesplit.TransactOpts, fromToken, destToken, amount, minReturn, distribution, flags)
+}
+
+// Fallback is a paid mutator transaction binding the contract fallback function.
+//
+// Solidity: fallback() payable returns()
+func (_Onesplit *OnesplitTransactor) Fallback(opts *bind.TransactOpts, calldata []byte) (*types.Transaction, error) {
+	return _Onesplit.contract.RawTransact(opts, calldata)
+}
+
+// Fallback is a paid mutator transaction binding the contract fallback function.
+//
+// Solidity: fallback() payable returns()
+func (_Onesplit *OnesplitSession) Fallback(calldata []byte) (*types.Transaction, error) {
+	return _Onesplit.Contract.Fallback(&_Onesplit.TransactOpts, calldata)
+}
+
+// Fallback is a paid mutator transaction binding the contract fallback function.
+//
+// Solidity: fallback() payable returns()
+func (_Onesplit *OnesplitTransactorSession) Fallback(calldata []byte) (*types.Transaction, error) {
+	return _Onesplit.Contract.Fallback(&_Onesplit.TransactOpts, calldata)
 }
