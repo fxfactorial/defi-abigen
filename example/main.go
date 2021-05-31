@@ -18,7 +18,7 @@ var (
 	Client_dial = flag.String(
 		"client_dial", "ws://192.168.1.2:9551", "could be websocket or IPC",
 	)
-	AAVE_ADDR_PROVIDER = common.HexToAddress("0x24a42fD28C976A61Df5D00D0599C34c4f90748c8")
+	AAVE_ADDR_PROVIDER = common.HexToAddress("0x7d2768de32b0b80b7a3454c06bdac94a69ddc7a9")
 )
 
 const (
